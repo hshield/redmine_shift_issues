@@ -1,3 +1,23 @@
-= shift_issues
+= redmine_shift_issues
 
-Description goes here
+Shift Issues plugin for Redmine v2.2.0
+This plugin will add +Shift issues+ context menu in the issues page. It can move the selected issues backward or forward by specific number of days.
+
+= Installation
+* download and copy / extract to your redmine +plugins/+ directory
+  Note the directory should be named as +redmine_shift_issues+
+* run +rake redmine:plugins:migrate RAILS_ENV=production+
+* restart the redmine server
+
+= Usage
+* go to project's issues page
+* select all issues to be shifted
+* right click one of the selected issues & select +Shift issues+
+  Note: the +Shift issues+ menu only available to users that has permission to update the issue
+* select +backward+ or +forward+ to shift the issues backward or forward by specific number of days
+* enter the number of days to shift the issues backward or forward
+* click +Apply+
+
+= Releases
+== Version 1.0
+* Release for Redmine v2.2.0
