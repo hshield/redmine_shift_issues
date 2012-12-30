@@ -1,0 +1,13 @@
+<%
+require "logger"
+log = Logger.new("log/dump.log")
+log.debug("can: " + @can.inspect)
+
+%>
+<% if @can[:update] %>
+	<li>
+		<%= context_menu_link l(:menu_shift_issues),
+			{:controller => 'shift_issues', :action => 'index', :issue_ids => @issues.collect{|issue| issue.id}, :back_url => @back}
+			%>
+    </li>
+<% end %>

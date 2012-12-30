@@ -1,0 +1,12 @@
+<% @issues.each do |issue|
+	issue.reload
+	puts issue.inspect
+end %>
+
+<%= debug @issues %>
+
+<%= @unsaved_issue_ids.inspect %>
+
+<%= form_tag(:action => "") do %>
+	<p><%= submit_tag l(:button_submit) %></p>
+<% end %>

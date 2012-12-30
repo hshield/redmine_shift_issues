@@ -1,0 +1,65 @@
+<h2><%= l :title_shift_issues %></h2>
+
+<% if @issues.nil? or @issues.empty? %>
+	<p class="nodata"><%= l(:label_no_data) %></p>
+
+	<%= link_to l(:button_back), @back_url, :class => "icon icon_back" %>
+<% else %>
+	<table class="list issues">
+		<thead>
+			<tr>
+				<th>#</th>
+				<% if @projects.size > 1 then %>
+					<th>Project</th>
+				<% end %>
+				<th>Tracker</th>
+				<th>Status</th>
+				<th>Subject</th>
+				<th>Assignee</th>
+				<th>Start Date</th>
+				<th>End Date</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @issues.each do |issue| %>
+				<tr class="<%= cycle('odd','even') %> <%= issue.css_classes %>">
+					<td><%= link_to issue.id, :controller => 'issues', :action => 'show', :id => issue %></td>
+					<% if @projects.size > 1 then %>
+						<td><%= link_to issue.project.name, :controller => 'projects', :action => 'show', :id => issue.project %></td>
+					<% end %>
+					<td><%= issue.tracker %></td>
+					<td><%= issue.status %></td>
+					<td><%= link_to issue.subject, :controller => 'issues', :action => 'show', :id => issue %></td>
+					<td><%= issue.assigned_to %></td>
+					<td><%= issue.start_date.strftime("%d/%m/%Y") if !issue.start_date.nil? %></td>
+					<td><%= issue.due_date.strftime("%d/%m/%Y") if !issue.due_date.nil? %></td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+	<br />
+	<%= form_tag({ :controller => 'shift_issues', :action => 'shift' }, :method => :post, :id => 'shift_form') do %>
+		<%= hidden_field_tag "back_url", @back_url %>
+		<% @issues.each do |issue| %>
+				<%= hidden_field_tag("issue_ids[]", issue.id, :id => 'issue_ids_' + issue.id.to_s) %>
+		<% end %>
+
+		<p><%= l :label_shift_issues %></p>
+
+		<p>
+			<label><%= radio_button_tag 'shift_type', '0' %> <%= l :label_shift_backward %> </label>
+			&nbsp;&nbsp;&nbsp;
+			<label><%= radio_button_tag 'shift_type', '1', true %> <%= l :label_shift_forward %> </label>
+		</p>
+
+		<p>
+			<%= l :label_by %> <%= text_field_tag "shift_days", "0" %> <%= l :label_days %>
+		</p>
+
+		<p class="buttons hide-when-print">
+			<%= link_to_function l(:button_apply), '$("#shift_form").submit()', :class => 'icon icon-checked' %>
+			&nbsp;&nbsp;&nbsp;
+			<%= link_to l(:button_cancel), @back_url, :class => "icon icon-cancel" %>
+		</p>
+	<% end %>
+<% end %>

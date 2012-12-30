@@ -1,0 +1,9 @@
+# English strings go here for Rails i18n
+en:
+  title_shift_issues: "Shift Issues"
+  menu_shift_issues: "Shift issues"
+  label_shift_issues: "Shift issues"
+  label_shift_backward: "backward"
+  label_shift_forward: "forward"
+  label_by: "by"
+  label_days: "days"
